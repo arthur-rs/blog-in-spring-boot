@@ -6,33 +6,44 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Data
 @Getter
 public class UserEntity {
-	UUID id;
+	private UUID id;
 
-	String name;
+	private String name;
 
-	String email;
+	private String email;
 
-	String password;
+	private String password;
 
-	UserStatusEnum status;
+	private UserStatusEnum status;
 
 	public UserEntity(
-			Optional<UUID> id,
-			@NonNull String name,
-			@NonNull String email,
-			@NonNull String password,
-			Optional<UserStatusEnum> status
+		@NonNull UUID id,
+		@NonNull String name,
+		@NonNull String email,
+		@NonNull String password,
+		@NonNull UserStatusEnum status
 	) {
-		this.id = id.orElseGet(UUID::randomUUID);
+		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.status = status.orElse(UserStatusEnum.ACTIVE);
+		this.status = status;
+	}
+
+	public UserEntity(
+		@NonNull String name,
+		@NonNull String email,
+		@NonNull String password
+	) {
+		this.id = UUID.randomUUID();
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.status = UserStatusEnum.ACTIVE;
 	}
 }

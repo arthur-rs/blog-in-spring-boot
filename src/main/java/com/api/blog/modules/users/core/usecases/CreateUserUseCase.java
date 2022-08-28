@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @AllArgsConstructor
 public class CreateUserUseCase implements CreateUserPort {
@@ -31,11 +30,9 @@ public class CreateUserUseCase implements CreateUserPort {
 		var passwordHashed = this.hash.make(input.getPassword());
 
 		var userEntity = new UserEntity(
-				Optional.empty(),
-				input.getName(),
-				input.getEmail(),
-				passwordHashed,
-				Optional.empty()
+			input.getName(),
+			input.getEmail(),
+			passwordHashed
 		);
 
 		this.usersRepository.save(userEntity);
