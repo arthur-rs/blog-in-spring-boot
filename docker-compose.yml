@@ -1,4 +1,4 @@
-version: 3.2
+version: "3.2"
 services:
   postgresql:
     image: postgres:alpine
@@ -9,7 +9,7 @@ services:
     environment:
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=postgres
-        - POSTGRES_DB=postgres
+        - POSTGRES_DB=blog_db
     restart: always
     networks:
       - default

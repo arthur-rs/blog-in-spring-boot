@@ -1,14 +1,19 @@
 package com.api.blog.modules.users.adapters.configs;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 
 @Getter
 @Setter
-@PropertySource(value = "modules.users.users-repository")
-@Configuration("UsersRepositoryConfig")
+@Configuration
+@AllArgsConstructor
+@PropertySource("classpath:modules/users.properties")
 public class UsersRepositoryConfig {
-	private String adapter;
+	@Autowired
+	private Environment env;
 }

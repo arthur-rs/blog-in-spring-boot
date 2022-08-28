@@ -6,16 +6,14 @@ import com.api.blog.modules.users.core.models.entities.UserEntity;
 import com.api.blog.modules.users.core.ports.out.UsersRepositoryPort;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
+@Service(UsersRepositoryJpaImpl.ADAPTER_TOKEN)
 @AllArgsConstructor
-@Qualifier(UsersRepositoryJpaImpl.ADAPTER_TOKEN)
 public class UsersRepositoryJpaImpl implements UsersRepositoryPort {
 	public static final String ADAPTER_TOKEN = "JpaUsersRepositoryAdapter";
 	private final UsersRepositoryJpa usersRepositoryJpa;

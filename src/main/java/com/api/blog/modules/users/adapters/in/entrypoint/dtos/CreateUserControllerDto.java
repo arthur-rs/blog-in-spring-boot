@@ -1,4 +1,4 @@
-package com.api.blog.modules.users.core.models.dtos;
+package com.api.blog.modules.users.adapters.in.entrypoint.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Getter
 @AllArgsConstructor
-public class CreateUserDto {
+public class CreateUserControllerDto {
 	@NotBlank
 	String name;
 	@NotBlank
@@ -21,3 +21,4 @@ public class CreateUserDto {
 	@Length(min = 6)
 	String password;
 }
+

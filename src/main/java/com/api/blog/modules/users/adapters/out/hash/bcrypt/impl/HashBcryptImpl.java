@@ -1,21 +1,24 @@
 package com.api.blog.modules.users.adapters.out.hash.bcrypt.impl;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.api.blog.modules.users.core.ports.out.HashPort;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
-@Qualifier(HashBcryptImpl.ADAPTER_TOKEN)
+@AllArgsConstructor
+@Component(HashBcryptImpl.ADAPTER_TOKEN)
 public class HashBcryptImpl implements HashPort {
 	public static final String ADAPTER_TOKEN = "BcryptHashAdapter";
 	@Override
 	public String make(String value) {
-		return new BCryptPasswordEncoder().encode(value);
+		return BCrypt.withDefaults().hashToString(12, value.toCharArray());
 	}
 
 	@Override
 	public Boolean compare(String value, String valueHashed) {
-		return new BCryptPasswordEncoder().matches(value, valueHashed);
+		var result = BCrypt
+				.verifyer()
+				.verify(value.toCharArray(), valueHashed.toCharArray());
+		return result.verified;
 	}
 }
