@@ -16,7 +16,6 @@ public class CreateUserUseCase implements CreateUserPort {
 
 	UsersRepositoryPort usersRepository;
 	HashPort hash;
-
 	@Override
 	public UserEntity create(@Valid @NotNull CreateUserDto input) throws EmailAlreadyExistsException {
 		var emailAlreadyExists = this.usersRepository.findByEmail(

@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,9 +23,11 @@ public class UsersRepositoryJpaImpl implements UsersRepositoryPort {
 		var userJpaEntity = usersRepositoryJpa.findByEmail(email);
 		if(userJpaEntity.isPresent()) {
 			var userEntity = new UserEntity(
-				userJpaEntity.get().getName(),
-				userJpaEntity.get().getEmail(),
-				userJpaEntity.get().getPassword()
+					userJpaEntity.get().getId(),
+					userJpaEntity.get().getName(),
+					userJpaEntity.get().getEmail(),
+					userJpaEntity.get().getPassword(),
+					userJpaEntity.get().getStatus()
 			);
 			return Optional.of(userEntity);
 		}
@@ -36,13 +39,29 @@ public class UsersRepositoryJpaImpl implements UsersRepositoryPort {
 		var userJpaEntity = usersRepositoryJpa.findById(id);
 		if(userJpaEntity.isPresent()) {
 			var userEntity = new UserEntity(
-				userJpaEntity.get().getName(),
-				userJpaEntity.get().getEmail(),
-				userJpaEntity.get().getPassword()
+					userJpaEntity.get().getId(),
+					userJpaEntity.get().getName(),
+					userJpaEntity.get().getEmail(),
+					userJpaEntity.get().getPassword(),
+					userJpaEntity.get().getStatus()
 			);
 			return Optional.of(userEntity);
 		}
 		return Optional.empty();
+	}
+
+	@Override
+	public List<UserEntity> findAll() {
+		var userJpaEntities = usersRepositoryJpa.findAll();
+	    return userJpaEntities.stream().map(userJpaEntity -> (
+			 new UserEntity(
+					userJpaEntity.getId(),
+					userJpaEntity.getName(),
+					userJpaEntity.getEmail(),
+					userJpaEntity.getPassword(),
+					userJpaEntity.getStatus()
+			)
+		)).toList();
 	}
 
 	@Override
